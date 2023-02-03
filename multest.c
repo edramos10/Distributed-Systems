@@ -1,39 +1,77 @@
 /*+++++++++++++++++++++++++++++++++++
-.COPYRIGHT	Copyright statement	Required, Header
-.IDENTifier	File name of module	Required, Header
-.MODULE	Type of module	 
-.AUTHOR	Name of creator	Required, Header
-.KEYWORDs	Subject keywords	Required
-.LANGUAGE	Language of module	Required, Header
-.PURPOSE	General purpose of module	Required
-.COMMENTs	Comments	Optional
-.VERSION	Version no., date, etc.	Required, Header
-.RETURNS	Return values for functions	Required, Routine
-.ENVIRONment	Special environment requirements	Required
-multest.c
+
+File Name: multest.c
 Author: Edgar Rene Ramos Acosta
 Lenguage: C
 Purpose: Next code below shows how matrices can be multiplied by using the sequential algorithm
+Version: 1.0, 02-02-2023
 
 --------------------------------------*/
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include<stdio.h>
 
+#define MAX_SIZE 512
 
-void multiply(float A[8][8], float B[8][8], float C[8][8])
-{
-
+void multiplyMatrices(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n) {
+    int i, j, k;
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            resultMatrix[i][j] = 0;
+            for (k = 0; k < n; k++) {
+                resultMatrix[i][j] += Matrix1[i][k] * Matrix2[k][j];
+            }
+        }
+    }
 }
-void main()
-{
-    int ROW= 8;
-    int COL= 8;
-    int i=0, j=0, k=0;
+
+int main() {
+    float A[MAX_SIZE][MAX_SIZE], B[MAX_SIZE][MAX_SIZE], resultMatrix[MAX_SIZE][MAX_SIZE];
+    int n;
+    int i, j,k;
+    printf("Enter the size of matrices: ");
+    scanf("%d", &n);
+    printf("--Autofilling matrix wuth random numbers--\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            //scanf("%d", &A[i][j]);
+            A[i][j]=(float)rand() / RAND_MAX;
+            B[i][j]=(float)rand() / RAND_MAX;
+        }
+    }
+    printf("Printing MatriX A:\n");
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                printf("%f\t", A[i][j]);
+            }
+            printf("\n");
+        }
+           printf("Printing MatriX B:\n");
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                printf("%f\t", B[i][j]);
+            }
+            printf("\n");
+        }
+
+        multiplyMatrices(A, B, resultMatrix, n);
+       /* for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            resultMatrix[i][j] = 0;
+            for (k = 0; k < n; k++) {
+                resultMatrix[i][j] += A[i][k] * B[k][j];
+            }
+        }
+        }*/
+
+        printf("Product of matrices:\n");
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                printf("%f\t", resultMatrix[i][j]);
+            }
+            printf("\n");
+        }
     
-    printf("Enters size of matrices (default is 8): ");
-    scanf("%d", &ROW);
-    COL=ROW;
-    printf("Size of matrices are %d by %d", ROW, COL);
-
-
-
+    return 0;
 }
