@@ -12,7 +12,7 @@ Version: 1.0, 02-02-2023
 #include <time.h>
 #include <conio.h> /*for getch()*/ 
 #include <iostream>
-using namespace std;
+
 
 
 #define MAX_SIZE 128
@@ -35,8 +35,8 @@ int main(int argc, char** argv){
     int i, j,k;
     //printf("Enter the size of matrices: ");
     //scanf("%d", &n);
-    n=(int)argv[0];
-    printf("%d--Autofilling matrix wuth random numbers--\n",argv[0]);
+    n=atoi(argv[1]);
+    printf("Rank is %d. --Autofilling matrix with random numbers--\n",n);
     for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
        

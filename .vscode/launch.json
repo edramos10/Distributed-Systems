@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "c:/Users/edramos/Documents/Distributed-Systems",
-      "program": "c:/Users/edramos/Documents/Distributed-Systems/multest.c",
+      "program": "c:/Users/edramos/Documents/Distributed-Systems/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -11,35 +11,32 @@ Version: 1.0, 02-02-2023
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h> /*for getch()*/ 
-#include <iostream>
-using namespace std;
 
 
-#define MAX_SIZE 128
+#define MAX_SIZE 256
 
-void multiplyMatrices(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n) {
+void multiplyMatrices(float A[][MAX_SIZE], float B[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n) {
     int i, j, k;
     for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
             resultMatrix[i][j] = 0;
             for (k = 0; k < n; k++) {
-                resultMatrix[i][j] += Matrix1[i][k] * Matrix2[k][j];
+                resultMatrix[i][j] += A[i][k] * B[k][j];
             }
         }
     }
 }
 
-int main(int argc, char** argv){
+void main() {
     float A[MAX_SIZE][MAX_SIZE], B[MAX_SIZE][MAX_SIZE], resultMatrix[MAX_SIZE][MAX_SIZE];
     int n;
     int i, j,k;
-    //printf("Enter the size of matrices: ");
-    //scanf("%d", &n);
-    n=(int)argv[0];
-    printf("%d--Autofilling matrix wuth random numbers--\n",argv[0]);
+    printf("Enter the size of matrices: ");
+    scanf("%d", &n);
+    printf("--Autofilling matrix wuth random numbers--\n");
     for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
-       
+            //scanf("%d", &A[i][j]);
             A[i][j]=(float)rand() / RAND_MAX;
             B[i][j]=(float)rand() / RAND_MAX;
         }
@@ -60,7 +57,15 @@ int main(int argc, char** argv){
         }
 
         multiplyMatrices(A, B, resultMatrix, n);
-   
+      /* for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            resultMatrix[i][j] = 0;
+            for (k = 0; k < n; k++) {
+                resultMatrix[i][j] += A[i][k] * B[k][j];
+            }
+        }
+        }*/
+
         printf("Product of matrices:\n");
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
@@ -68,7 +73,7 @@ int main(int argc, char** argv){
             }
             printf("\n");
         }
-      
-    return 0;
-   
+        getch();    
+    
+    //return 0;
 }
