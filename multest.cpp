@@ -15,7 +15,7 @@ Version: 1.0, 02-02-2023
 
 
 
-#define MAX_SIZE 128
+#define MAX_SIZE 100
 
 void multiplyMatrices(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n) {
     int i, j, k;

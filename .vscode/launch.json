@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "c:/Users/edramos/Documents/Distributed-Systems",
-      "program": "c:/Users/edramos/Documents/Distributed-Systems/build/Debug/outDebug",
+      "externalConsole": false,
+      "cwd": "/home/edramos/Documents/Distributed-Systems",
+      "program": "/home/edramos/Documents/Distributed-Systems/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
