@@ -15,11 +15,9 @@ Version: 1.0, 02-02-2023
 
 const int MAX_SIZE= 512;
 
-void multiplyMatrices(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
+void multiplyMatrices_ijk(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
+void multiplyMatrices_jik(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
 char *findArgument(int argc, char *argv[], char *cmd);
-
-
-
 
 
 int main(int argc, char *argv[]){
@@ -27,7 +25,8 @@ int main(int argc, char *argv[]){
     int n, blkNumber=0;
     int i, j,k;
     char *rank_cmd = "--rank";
-    char *block_cmd="--block-size";
+    char *block_cmd= "--block-size";
+    char *order_cmd= "--order";
     
 #pragma region "arguments management"
 
@@ -45,6 +44,15 @@ int main(int argc, char *argv[]){
     } else {
         printf("blockNumber not found\n");
     }
+
+    char *order = findArgument(argc, argv, order_cmd);
+    if (strlen(order) > 0) {
+        printf("order: %s\n", order);
+       
+    } else {
+        printf("order not found\n");
+    }
+
     if(strcmp(argv[1],("--help"))==0)
     {
             printf("--help: Arguments: --rank ranknumber --block-size blkNumber");
@@ -79,8 +87,14 @@ int main(int argc, char *argv[]){
         }
 #pragma endregion 
    
-        multiplyMatrices(A, B, resultMatrix, n);
-   
+    if(strcmp(order, "ijk")==0)
+    {
+        multiplyMatrices_ijk(A, B, resultMatrix, n);
+    }
+    if(strcmp(order, "jik")==0)
+    {
+        multiplyMatrices_jik(A, B, resultMatrix, n);
+    }
         printf("Product of matrices:\n");
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
@@ -110,10 +124,22 @@ char *findArgument(int argc, char *argv[], char *cmd) {
   return "";
 }
 
-void multiplyMatrices(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n) {
+void multiplyMatrices_ijk(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n) {
     int i, j, k;
     for (i = 0; i < n; i++) {
         for (j = 0; j < n; j++) {
+            resultMatrix[i][j] = 0;
+            for (k = 0; k < n; k++) {
+                resultMatrix[i][j] += Matrix1[i][k] * Matrix2[k][j];
+            }
+        }
+    }
+}
+
+void multiplyMatrices_jik(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n) {
+    int i, j, k;
+    for (j = 0; j < n; j++) {
+        for (i = 0; i < n; i++) {
             resultMatrix[i][j] = 0;
             for (k = 0; k < n; k++) {
                 resultMatrix[i][j] += Matrix1[i][k] * Matrix2[k][j];
