@@ -9,3 +9,5 @@ gcc ./multest.c -o task1 \
 ./task1 --rank [rankNumber] --block-num [blockNum] --order [ijk, jki, kij, kji]
 
 where rankNumber can be 8, 16, 32...1024
+
+##For additional information: tipe ./task1 --info
