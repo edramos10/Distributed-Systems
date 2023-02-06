@@ -2,7 +2,8 @@
 multest.c is developed to show the multiplication between squared matrices by using sequential algorithm
 
 ## Usage:
-within terminal type next commands:
+within terminal type next commands: \
+git clone  edramos10/Distributed-Systems.git
 gcc ./multest.c -o task1 \
 ./task1 --rank [rankNumber]
 
