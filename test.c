@@ -1,6 +1,16 @@
-#include <conio.h> /*for getch()*/ 
-#include <stdio.h> 
-void main(){ 
-	printf("hello world"); 
-	getch(); /*waiting for keypress*/  
-} 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+int main(int argc, char *argv[]) {
+  if (argc != 3) {
+    printf("Usage: %s <number1> <number2>\n", argv[0]);
+    return 1;
+  }
+  int num1 = atoi(argv[1]);
+  int num2 = atoi(argv[2]);
+  int sum = num1 + num2;
+  printf("The sum of %d and %d is %d\n", num1, num2, sum);
+  return 0;
+}
