@@ -22,42 +22,72 @@ char *findArgument(int argc, char *argv[], char *cmd);
 
 int main(int argc, char *argv[]){
     float A[MAX_SIZE][MAX_SIZE], B[MAX_SIZE][MAX_SIZE], resultMatrix[MAX_SIZE][MAX_SIZE];
-    int n, blkNumber=0;
+    int n=8, blkNumber=0, blk_size=0;
     int i, j,k;
     char *rank_cmd = "--rank";
-    char *block_cmd= "--block-size";
+    char *block_cmd= "--block-num";
     char *order_cmd= "--order";
     
 #pragma region "arguments management"
 
+    if(strcmp(argv[1],("--help"))==0)
+    {
+        printf("--help: Arguments:\n --rank stands for ranknumber\n--order: type ijk, jik, kij, kji, ikj, jki\n--block-num: stands for size of process blocks which matrix will be divided,\nresulting block size equals rank/block-num");
+        exit(0);
+
+    }
+    if(strcmp(argv[1],("--info"))==0)
+    {
+   
+        printf("--info: File Name: multest.c\nAuthor: Edgar Rene Ramos Acosta\nLenguage: C\nPurpose: Next code below shows how matrices can be multiplied by using the sequential algorithm\n");
+        printf("get repository by entering next commands in your terminal: ");
+        printf("\033[0;32m"); //Set the text to the color green
+        printf("git clone https://github.com/edramos10/Distributed-Systems.git");
+        printf("\033[0m"); //Resets the text to default color
+        exit(0);
+
+    }
+   
+
+        
     char *rankNumber = findArgument(argc, argv, rank_cmd);
     if (strlen(rankNumber) > 0) {
         printf("rankNumber: %s\n", rankNumber);
         n=atoi(rankNumber);
     } else {
+        printf("\033[0;31m"); //Set the text to the color red
         printf("rankNumber not found\n");
+        printf("\033[0m"); //Resets the text to default color
+        printf("Exiting from program...");
+        exit(0);
     }
     char *blockNumber = findArgument(argc, argv, block_cmd);
     if (strlen(blockNumber) > 0) {
-        printf("blockNumber: %s\n", blockNumber);
+        
         blkNumber=atoi(blockNumber);
+        blk_size=n/blkNumber;
+        printf("blockNumber: %s / block size: %d\n", blockNumber, blk_size);
     } else {
+        printf("\033[0;31m"); //Set the text to the color red
         printf("blockNumber not found\n");
+        printf("\033[0m"); //Resets the text to default color
+        printf("Exiting from program...");
+        exit(0);
     }
 
     char *order = findArgument(argc, argv, order_cmd);
     if (strlen(order) > 0) {
         printf("order: %s\n", order);
-       
+    
     } else {
-        printf("order not found\n");
+        printf("\033[0;31m"); //Set the text to the color red
+        printf("order which matrices would be multiplied (ijk, jik, ...etc) not found\n");
+        printf("\033[0m"); //Resets the text to default color
+        printf("Exiting from program...");
+        exit(0);
     }
 
-    if(strcmp(argv[1],("--help"))==0)
-    {
-            printf("--help: Arguments: --rank ranknumber --block-size blkNumber");
-
-    }
+  
 
 
 #pragma endregion
