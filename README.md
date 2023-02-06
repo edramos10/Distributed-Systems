@@ -6,6 +6,6 @@ within terminal type next commands: \
 git clone  https://github.com/edramos10/Distributed-Systems.git \
 cd Distributed-Systems \
 gcc ./multest.c -o task1 \
-./task1 --rank [rankNumber] 
+./task1 --rank [rankNumber] --block-size [blockNumber]
 
 where rankNumber can be 8, 16, 32...1024
