@@ -22,6 +22,7 @@ char *findArgument(int argc, char *argv[], char *cmd);
 
 int main(int argc, char *argv[]){
     float A[MAX_SIZE][MAX_SIZE], B[MAX_SIZE][MAX_SIZE], resultMatrix[MAX_SIZE][MAX_SIZE];
+    float subA[MAX_SIZE][MAX_SIZE], subB[MAX_SIZE][MAX_SIZE], subresultMatrix[MAX_SIZE][MAX_SIZE];
     int n=8, blkNumber=0, blk_size=0;
     int i, j,k;
     char *rank_cmd = "--rank";
@@ -39,10 +40,10 @@ int main(int argc, char *argv[]){
     if(strcmp(argv[1],("--info"))==0)
     {
    
-        printf("--info: File Name: multest.c\nAuthor: Edgar Rene Ramos Acosta\nLenguage: C\nPurpose: Next code below shows how matrices can be multiplied by using the sequential algorithm\n");
+        printf("--info: File Name: multest.c\nAuthor: Edgar Rene Ramos Acosta\nDate: 02-02-2023 \nLenguage: C\nPurpose: Next code below shows how matrices can be multiplied by using the sequential algorithm\n");
         printf("get repository by entering next commands in your terminal: ");
         printf("\033[0;32m"); //Set the text to the color green
-        printf("git clone https://github.com/edramos10/Distributed-Systems.git");
+        printf("git clone https://github.com/edramos10/Distributed-Systems.git \nmain app is task1, while source code is multest.c");
         printf("\033[0m"); //Resets the text to default color
         exit(0);
 
@@ -95,44 +96,74 @@ int main(int argc, char *argv[]){
 #pragma region "Autofilling matrices with random float numbers"
     printf("--Autofilling matrix with random numbers--\n");
     for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-       
+       for (j = 0; j < n; j++) {
+    
             A[i][j]=(float)rand() / RAND_MAX;
             B[i][j]=(float)rand() / RAND_MAX;
         }
     }
+
+    #pragma endregion 
+
     printf("Printing MatriX A:\n");
-        for (i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
                 printf("%f\t", A[i][j]);
             }
             printf("\n");
         }
-           printf("Printing MatriX B:\n");
-        for (i = 0; i < n; i++) {
-            for (j = 0; j < n; j++) {
+    printf("Printing MatriX B:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
                 printf("%f\t", B[i][j]);
             }
             printf("\n");
         }
-#pragma endregion 
+
+    if (blkNumber==1)
+    {
+        /* code */
    
-    if(strcmp(order, "ijk")==0)
-    {
-        multiplyMatrices_ijk(A, B, resultMatrix, n);
-    }
-    if(strcmp(order, "jik")==0)
-    {
-        multiplyMatrices_jik(A, B, resultMatrix, n);
-    }
-        printf("Product of matrices:\n");
-        for (i = 0; i < n; i++) {
-            for (j = 0; j < n; j++) {
-                printf("%f\t", resultMatrix[i][j]);
-            }
-            printf("\n");
+   
+        if(strcmp(order, "ijk")==0)
+        {
+            multiplyMatrices_ijk(A, B, resultMatrix, n);
         }
-      
+        if(strcmp(order, "jik")==0)
+        {
+            multiplyMatrices_jik(A, B, resultMatrix, n);
+        }
+            printf("Product of matrices:\n");
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < n; j++) {
+                    printf("%f\t", resultMatrix[i][j]);
+                }
+                printf("\n");
+            }
+    }
+    else{
+
+        for(int p=0;p<blkNumber;p++)
+        {
+            printf("Printing subMatriX A p%d:\n", p);
+            for (i = p+1; i < blk_size+p+1; i++) {
+                for (j = p+1; j < blk_size+p+1; j++) {
+                    printf("%f\t", A[i][j]);
+
+                }
+                 printf("\n");
+        }
+
+
+        }
+
+
+
+
+
+
+    }
+
     return 0;
    
 }
