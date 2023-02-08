@@ -27,7 +27,6 @@ int main(int argc, char *argv[]){
     int n=8, blkNumber=0, blk_size=0;
     int i, j,k;
     char *rank_cmd = "--rank";
-    char *block_cmd= "--block-num";
     char *order_cmd= "--order";
     
 #pragma region "arguments management"
@@ -91,35 +90,35 @@ int main(int argc, char *argv[]){
         }
     }
 
-    #pragma endregion 
 
     printf("Printing MatriX A:\n");
     printMatrix(A,n);
     printf("Printing MatriX B:\n");
     printMatrix(B,n);
 
-   
-   
+  #pragma endregion 
+
+#pragma region "Sequential Algorithm for Matrices multiplication"   
         if(strcmp(order, "ijk")==0)
         {
             multiplyMatrices_ijk(A, B, resultMatrix, n);
             printMatrix(resultMatrix,n);
-            //multiplyMatrices_jik(A, B, resultMatrix, n);
+       
 
         }
         if(strcmp(order, "jik")==0)
         {
             multiplyMatrices_jik(A, B, resultMatrix, n);
             printMatrix(resultMatrix,n);
-            //multiplyMatrices_ijk(A, B, resultMatrix, n);
-            //printMatrix(resultMatrix,n);
+          
         }
-      
+#pragma endregion     
             
    
     return (0);
 }
 
+#pragma region "Functions"
 char *findArgument(int argc, char *argv[], char *cmd) {
   for (int i = 0; i < argc; i++) {
     if (strcmp(argv[i], cmd) == 0) {
@@ -169,3 +168,6 @@ void printMatrix(float Matrix[][MAX_SIZE], int n){
                 printf("\n");
             }
 }
+
+
+#pragma endregion
