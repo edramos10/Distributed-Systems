@@ -13,7 +13,7 @@ Version: 1.0, 02-09-2023
 #include <string.h>
    
 
-const int MAX_SIZE= 128;
+const int MAX_SIZE= 256;
 
 void multiplyMatrices_ijk(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
 void multiplyMatrices_jik(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
@@ -164,6 +164,7 @@ int main(int argc, char *argv[]){
                 multiplyMatrices_ijk(subA21,subB12,subresultMatrixA, n/2);
                 multiplyMatrices_ijk(subA22,subB22,subresultMatrixB, n/2);
                 add_matrices(subresultMatrixA, subresultMatrixB, subC22,n/2);
+                end = clock();  
                
                 
                 if(count==29)
@@ -213,7 +214,7 @@ int main(int argc, char *argv[]){
           
         }
 
-    end = clock();  
+   
     elapsed = ((float) (end - start)) / CLOCKS_PER_SEC;
     float avg_exec_time=elapsed/30;
     printf("Elapsed time: %fs\n", elapsed);

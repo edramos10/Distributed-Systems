@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
     char *order_cmd= "--order";
     clock_t start, end;
     int count=0;
-    float elapsed=0;
+    double elapsed=0;
     printf("Hi! Welcome...\n");
 
 
@@ -126,23 +126,27 @@ int main(int argc, char *argv[]){
         }
         if(strcmp(order, "jik")==0)
         {
-                  while(count<30)
+            while(count<30)
             {
                
                 multiplyMatrices_jik(A, B, resultMatrix, n);
-                    if(count==29)
-                {
-                    printf("Printing MatriX C:\n");
-                    printMatrix(resultMatrix,n);
-                }
+                
+               
+                    
+
+              
                 count++;
                 
             }
+            
           
         }
-    end =clock();
-    elapsed = ((float) (end - start)) / CLOCKS_PER_SEC;
-    float avg_exec_time=elapsed/30;
+        end =clock();
+        printf("Printing MatriX C:\n");
+        printMatrix(resultMatrix,n);
+    
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    double avg_exec_time=elapsed/30;
     printf("Elapsed time: %fs\n", elapsed);
     printf("Avg Execution time for matrix multiplication (Sequential Algorithm): %f s", avg_exec_time);
 
