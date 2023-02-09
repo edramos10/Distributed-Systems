@@ -11,8 +11,8 @@ Version: 1.0, 02-02-2023
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <curses.h>   
-
+//#include <curses.h>   
+#include <conio.h>
 const int MAX_SIZE= 512;
 
 void multiplyMatrices_ijk(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
