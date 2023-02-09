@@ -1,1 +1,1 @@
-/usr/include/conio.h
+C:/usr/include/conio.h
