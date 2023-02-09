@@ -110,13 +110,7 @@ int main(int argc, char *argv[]){
             while(count<30)
             {
                
-                multiplyMatrices_ijk(A, B, resultMatrix, n);
-                if(count==29)
-                {
-                printf("Printing MatriX C:\n");
-                printMatrix(resultMatrix,n);
-                }
-            
+                multiplyMatrices_ijk(A, B, resultMatrix, n);            
                 count++;
                 
             }
