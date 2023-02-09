@@ -3,8 +3,8 @@
 File Name: SequMatMul.c
 Author: Edgar Rene Ramos Acosta
 Lenguage: C
-Purpose: Next code below shows how matrices can be multiplied by using the sequential algorithm
-Version: 1.0, 02-02-2023
+Purpose: Next code below shows how matrices can be multiplied by using the Divide and Conquer algorithm
+Version: 1.0, 02-09-2023
 
 --------------------------------------*/
 #include <stdio.h>
@@ -19,7 +19,7 @@ void multiplyMatrices_ijk(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], 
 void multiplyMatrices_jik(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
 void printMatrix(float Matrix[][MAX_SIZE], int n);
 char *findArgument(int argc, char *argv[], char *cmd);
-void strassenize(float mainMatrix[][MAX_SIZE], float subMatrix1[][MAX_SIZE], float subMatrix2[][MAX_SIZE],float subMatrix3[][MAX_SIZE],float subMatrix4[][MAX_SIZE],int n, int blkNumber);
+void divideMatrix(float A[][MAX_SIZE], float B[][MAX_SIZE], float A11[][MAX_SIZE],float A12[][MAX_SIZE],float A21[][MAX_SIZE],float A22[][MAX_SIZE],float B11[][MAX_SIZE],float B12[][MAX_SIZE],float B21[][MAX_SIZE],float B22[][MAX_SIZE],int n);
 void add_matrices(float matrixA[][MAX_SIZE], float matrixB[][MAX_SIZE], float resultMatrix[][MAX_SIZE],int n);
 
 
@@ -31,6 +31,9 @@ int main(int argc, char *argv[]){
     int i, j,k;
     char *rank_cmd = "--rank";
     char *order_cmd= "--order";
+    clock_t start, end;
+    int count=0;
+    float elapsed=0;
     
 #pragma region "arguments management"
 
@@ -102,10 +105,22 @@ int main(int argc, char *argv[]){
 
   #pragma endregion 
 
-#pragma region "Strassen Algorithm for Matrix multiplication"  
+#pragma region "Divide and Conquer Algorithm for Matrix multiplication\n"  
    
-    strassenize(A,subA11, subA12, subA21, subA22, n, blkNumber);
-    strassenize(B,subB11, subB12, subB21, subB22, n, blkNumber);
+    divideMatrix(A,B,subA11, subA12, subA21, subA22,subB11, subB12, subB21, subB22,n);
+    printf("Prining subMatrices A\n");
+    printMatrix(subA11,n/2);
+    printMatrix(subA12,n/2);
+    printMatrix(subA21,n/2);
+    printMatrix(subA22,n/2);
+    printf("Prining subMatrices B\n");
+    printMatrix(subB11,n/2);
+    printMatrix(subB12,n/2);
+    printMatrix(subB21,n/2);
+    printMatrix(subB22,n/2);
+
+
+
    /*
     //c11= a11*b11 + a12*b21
     //c12=a11*b12 + a12*b22
@@ -129,33 +144,45 @@ int main(int argc, char *argv[]){
     */
 
 
-        
+    start = clock();  
         if(strcmp(order, "ijk")==0)
         {
-            add_matrices(subA11,subA22,subresultMatrixA,n/blkNumber);
-            add_matrices(subB11,subB22,subresultMatrixB,n/blkNumber);
-            multiplyMatrices_ijk(subresultMatrixA, subresultMatrixB, subresultMatrix, n/blkNumber);
+            while(count<30)
+            {
+                multiplyMatrices_ijk(subA11,subB11,subresultMatrixA, n/2);
+                multiplyMatrices_ijk(subA12,subB21,subresultMatrixB, n/2);
+                add_matrices(subresultMatrixA, subresultMatrixB, subC11,n/2);
+
+                multiplyMatrices_ijk(subA11,subB12,subresultMatrixA, n/2);
+                multiplyMatrices_ijk(subA12,subB22,subresultMatrixB, n/2);
+                add_matrices(subresultMatrixA, subresultMatrixB, subC12,n/2);
+
+                multiplyMatrices_ijk(subA21,subB11,subresultMatrixA, n/2);
+                multiplyMatrices_ijk(subA22,subB21,subresultMatrixB, n/2);
+                add_matrices(subresultMatrixA, subresultMatrixB, subC21,n/2);
+
+                multiplyMatrices_ijk(subA21,subB12,subresultMatrixA, n/2);
+                multiplyMatrices_ijk(subA22,subB22,subresultMatrixB, n/2);
+                add_matrices(subresultMatrixA, subresultMatrixB, subC22,n/2);
+               
+                
+                if(count==29)
+                {
+                printf("Printing MatriX C:\n");
+                printMatrix(subC11,n/2);
+                printMatrix(subC12,n/2);
+                printMatrix(subC21,n/2);
+                printMatrix(subC22,n/2);
+                }
             
+                count++;
+                
+            }
+            count=0;
+             
 
-            multiplyMatrices_ijk(subA11, subB11, subresultMatrixA, n/blkNumber);
-            multiplyMatrices_ijk(subA12, subB21, subresultMatrixB, n/blkNumber);
-            add_matrices(subresultMatrixA,subresultMatrixB,subresultMatrix,n/blkNumber);
-            printMatrix(subresultMatrix,n/blkNumber);
 
-            multiplyMatrices_ijk(subA11, subB12, subresultMatrixA, n/blkNumber);
-            multiplyMatrices_ijk(subA12, subB22, subresultMatrixB, n/blkNumber);
-            add_matrices(subresultMatrixA,subresultMatrixB,subresultMatrix,n/blkNumber);
-            printMatrix(subresultMatrix,n/blkNumber);
-
-            multiplyMatrices_ijk(subA11, subB11, subresultMatrixA, n/blkNumber);
-            multiplyMatrices_ijk(subA12, subB21, subresultMatrixB, n/blkNumber);
-            add_matrices(subresultMatrixA,subresultMatrixB,subresultMatrix,n/blkNumber);
-            printMatrix(subresultMatrix,n/blkNumber);
-
-            multiplyMatrices_ijk(subA11, subB11, subresultMatrixA, n/blkNumber);
-            multiplyMatrices_ijk(subA12, subB21, subresultMatrixB, n/blkNumber);
-            add_matrices(subresultMatrixA,subresultMatrixB,subresultMatrix,n/blkNumber);
-            printMatrix(subresultMatrix,n/blkNumber);
+     
             
        
 
@@ -185,6 +212,13 @@ int main(int argc, char *argv[]){
             */
           
         }
+
+    end = clock();  
+    elapsed = ((float) (end - start)) / CLOCKS_PER_SEC;
+    float avg_exec_time=elapsed/30;
+    printf("Elapsed time: %fs\n", elapsed);
+    printf("Avg Execution time for matrix multiplication (Divide and Conquer Algorithm): %f s", avg_exec_time);
+
 #pragma endregion     
             
    
@@ -243,46 +277,23 @@ void printMatrix(float Matrix[][MAX_SIZE], int n){
             printf("\n");
 }
 
-void strassenize(float mainMatrix[][MAX_SIZE], float subMatrix1[][MAX_SIZE], float subMatrix2[][MAX_SIZE],float subMatrix3[][MAX_SIZE],float subMatrix4[][MAX_SIZE],int n, int blkNumber){
+void divideMatrix(float A[][MAX_SIZE], float B[][MAX_SIZE], float A11[][MAX_SIZE],float A12[][MAX_SIZE],float A21[][MAX_SIZE],float A22[][MAX_SIZE],float B11[][MAX_SIZE],float B12[][MAX_SIZE],float B21[][MAX_SIZE],float B22[][MAX_SIZE],int n){
 
-    int blk_size=n/2;
+   
       
-            printf("Printing subMatriX p0:\n");
-            for (int i = 0; i < blk_size; i++) {
-                for (int j = 0; j < blk_size; j++) {
-                    printf("%f\t", mainMatrix[i][j]);
-                    subMatrix1[i][j]=mainMatrix[i][j];
+    for (int i = 0; i < n/2; i++) {
+        for (int j = 0; j < n/2; j++) {
+            A11[i][j] = A[i][j];
+            A12[i][j] = A[i][j + n/2];
+            A21[i][j] = A[i + n/2][j];
+            A22[i][j] = A[i + n/2][j + n/2];
 
-                }
-                 printf("\n");
-            }
-            printf("Printing subMatriX p1:\n");
-            for (int i = 0; i < blk_size; i++) {
-                for (int j = blk_size; j < blk_size*2; j++) {
-                    printf("%f\t", mainMatrix[i][j]);
-                    subMatrix2[i][j]=mainMatrix[i][j];
-
-                }
-                 printf("\n");
-            }
-            printf("Printing subMatriX p2:\n");
-            for (int i = blk_size; i < blk_size*2; i++) {
-                for (int j = 0; j < blk_size; j++) {
-                    printf("%f\t", mainMatrix[i][j]);
-                    subMatrix3[i][j]=mainMatrix[i][j];
-
-                }
-                 printf("\n");
-            }
-            printf("Printing subMatriX p3:\n");
-            for (int i = blk_size; i < blk_size*2; i++) {
-                for (int j = blk_size; j < blk_size*2; j++) {
-                    printf("%f\t", mainMatrix[i][j]);
-                    subMatrix4[i][j]=mainMatrix[i][j];
-
-                }
-                 printf("\n");
-            }
+            B11[i][j] = B[i][j];
+            B12[i][j] = B[i][j + n/2];
+            B21[i][j] = B[i + n/2][j];
+            B22[i][j] = B[i + n/2][j + n/2];
+        }
+    }
 
 }
 void add_matrices(float matrixA[][MAX_SIZE], float matrixB[][MAX_SIZE], float resultMatrix[][MAX_SIZE],int n) {

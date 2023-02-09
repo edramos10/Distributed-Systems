@@ -11,10 +11,9 @@ Version: 1.0, 02-02-2023
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <conio.h>
 
 
-const long int MAX_SIZE= 256;
+const int MAX_SIZE= 512;
 
 void multiplyMatrices_ijk(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
 void multiplyMatrices_jik(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
@@ -30,10 +29,9 @@ int main(int argc, char *argv[]){
     char *rank_cmd = "--rank";
     char *order_cmd= "--order";
     clock_t start, end;
-    int count=0;
-    float elapsed=0;
+    double elapsed;
     printf("Hi! Welcome...\n");
-
+#pragma region "arguments management"
 
     if(strcmp(argv[1],("--help"))==0)
     {
@@ -82,9 +80,9 @@ int main(int argc, char *argv[]){
   
 
 
+#pragma endregion
 
-
-
+#pragma region "Autofilling matrices with random float numbers"
     printf("--Autofilling matrix with random numbers--\n");
     for (i = 0; i < n; i++) {
        for (j = 0; j < n; j++) {
@@ -100,9 +98,10 @@ int main(int argc, char *argv[]){
     printf("Printing MatriX B:\n");
     printMatrix(B,n);
 
+  #pragma endregion 
 
-
-
+#pragma region "Sequential Algorithm for Matrix multiplication" 
+int count=0;
  start = clock();  
         if(strcmp(order, "ijk")==0)
         {
@@ -141,11 +140,12 @@ int main(int argc, char *argv[]){
           
         }
     end =clock();
-    elapsed = ((float) (end - start)) / CLOCKS_PER_SEC;
-    float avg_exec_time=elapsed/30;
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    double avg_exec_time=elapsed/30;
     printf("Elapsed time: %fs\n", elapsed);
     printf("Avg Execution time for matrix multiplication (Sequential Algorithm): %f s", avg_exec_time);
-
+#pragma endregion     
+            
 
     return (0);
 }
