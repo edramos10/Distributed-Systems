@@ -11,8 +11,8 @@ Version: 1.0, 02-02-2023
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-//#include <curses.h>   
-#include <conio.h>
+
+
 const int MAX_SIZE= 512;
 
 void multiplyMatrices_ijk(float Matrix1[][MAX_SIZE], float Matrix2[][MAX_SIZE], float resultMatrix[][MAX_SIZE], int n);
@@ -28,6 +28,8 @@ int main(int argc, char *argv[]){
     int i, j,k;
     char *rank_cmd = "--rank";
     char *order_cmd= "--order";
+    clock_t start, end;
+    double elapsed;
     
 #pragma region "arguments management"
 
@@ -98,20 +100,50 @@ int main(int argc, char *argv[]){
 
   #pragma endregion 
 
-#pragma region "Sequential Algorithm for Matrices multiplication"   
+#pragma region "Sequential Algorithm for Matrix multiplication" 
+int count=0;
+ start = clock();  
         if(strcmp(order, "ijk")==0)
         {
-            multiplyMatrices_ijk(A, B, resultMatrix, n);
-            printMatrix(resultMatrix,n);
-       
+           
+            while(count<30)
+            {
+               
+                multiplyMatrices_ijk(A, B, resultMatrix, n);
+                if(count==29)
+                {
+                printf("Printing MatriX C:\n");
+                printMatrix(resultMatrix,n);
+                }
+            
+                count++;
+                
+            }
+            count=0;
+          
 
         }
         if(strcmp(order, "jik")==0)
         {
-            multiplyMatrices_jik(A, B, resultMatrix, n);
-            printMatrix(resultMatrix,n);
+                  while(count<30)
+            {
+               
+                multiplyMatrices_jik(A, B, resultMatrix, n);
+                    if(count==29)
+                {
+                    printf("Printing MatriX C:\n");
+                    printMatrix(resultMatrix,n);
+                }
+                count++;
+                
+            }
           
         }
+    end =clock();
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    double avg_exec_time=elapsed/30;
+    printf("Elapsed time: %fs\n", elapsed);
+    printf("Avg Execution time for matrix multiplication (Sequential Algorithm): %f s", avg_exec_time);
 #pragma endregion     
             
    
