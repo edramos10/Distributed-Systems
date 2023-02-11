@@ -28,6 +28,7 @@ int main(int argc, char *argv[]){
     float subA11[MAX_SIZE][MAX_SIZE], subA12[MAX_SIZE][MAX_SIZE],subA21[MAX_SIZE][MAX_SIZE],subA22[MAX_SIZE][MAX_SIZE],subB11[MAX_SIZE][MAX_SIZE],subB12[MAX_SIZE][MAX_SIZE],subB21[MAX_SIZE][MAX_SIZE],subB22[MAX_SIZE][MAX_SIZE], subresultMatrix[MAX_SIZE][MAX_SIZE];
     float subC11[MAX_SIZE][MAX_SIZE], subC12[MAX_SIZE][MAX_SIZE],subC21[MAX_SIZE][MAX_SIZE],subC22[MAX_SIZE][MAX_SIZE];
     int n=8, blkNumber=2, blk_size=0;
+    
     int i, j,k;
     char *rank_cmd = "--rank";
     char *order_cmd= "--order";
